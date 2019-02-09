@@ -37,4 +37,24 @@ QUnit.module('Тестируем функцию roman', function () {
 		assert.strictEqual(roman('1990'), 'MCMXC');
 		assert.strictEqual(roman('2017'), 'MMXVII');
 	});
+
+	QUnit.test('roman правильно работает с разными регистрами', function (assert) {
+		assert.strictEqual(roman('MCmIV'), 1904);
+		assert.strictEqual(roman('mCMXC'), 1990);
+		assert.strictEqual(roman('mmXvIi'), 2017);
+	});
+
+	QUnit.test('roman правильно определяет, что была передана на вход неправильная строка', function (assert) {
+		assert.strictEqual(roman('VIIII'), 'Wrong input!');
+		assert.strictEqual(roman('VVVVX'), 'Wrong input!');
+		assert.strictEqual(roman('VX'), 'Wrong input!');
+
+		assert.strictEqual(roman('VIZ'), 'Wrong input!');
+		assert.strictEqual(roman('QX'), 'Wrong input!');
+		assert.strictEqual(roman('X;'), 'Wrong input!');
+
+		assert.strictEqual(roman('Котик'), 'Wrong input!');
+		assert.strictEqual(roman('спиТ'), 'Wrong input!');
+		assert.strictEqual(roman('КлУбКом;'), 'Wrong input!');
+	});
 });
