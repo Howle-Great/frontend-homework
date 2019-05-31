@@ -1,61 +1,66 @@
 'use strict';
-
+const max = numbers => Math.max(...numbers);
 // let numTab = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
 // 		    [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'],
 // 				[10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']];
 				
-const numTab = [
-	{arab: 1000, roman: 'M'},
-	{arab: 900, roman: 'CM'},
-	{arab: 500, roman: 'D'},
-	{arab: 400, roman: 'CD'},
-	{arab: 100, roman: 'C'},
-	{arab: 90, roman: 'XC'},
-	{arab: 50, roman: 'L'},
-	{arab: 40, roman: 'XL'},
-	{arab: 10, roman: 'X'},
-	{arab: 9, roman: 'IX'},
-	{arab: 5, roman: 'V'},
-	{arab: 4, roman: 'IV'},
-	{arab: 1, roman: 'I'},
-];
+const numTab = {
+	'M': 1000,
+	'CM': 900,
+	'D': 500,
+	'CD': 400,
+	'C': 100,
+	'XC': 90,
+	'L': 50,
+	'XL': 40,
+	'X': 10,
+	'IX': 9,
+	'V': 5,
+	'IV': 4,
+	'I': 1,
+};
+
+function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
+}
 
 function arabToRoman(number) {
 	let out = '';
 	if (number <= 0) {
 		return '';
 	}
-	numTab.forEach((elem) => {
-		while ( number >= elem.arab){
-			out += elem.roman;
-			number -= elem.arab;
+	Object.values(numTab).forEach((elem) => {
+		while ( number >= elem){
+			out += getKeyByValue(numTab, elem);
+			number -= elem;
 		}
 	});
    return out;
 }
 
 function romanToArab(number) {
-	 number = number.toUpperCase();
+	number = number.toUpperCase();
 	let out = 0;
 	let position = 0;
-	numTab.forEach((elem, elemIndx) => {
-		if (number.substr(position, elem.roman.length) == elem.roman) {
-			out += elem.arab;
-			position += elem.roman.length;
-		}
-		if (i <= numTab.length - 1 && position < number.length) {
-			break;
-		}
-	});
-	// for (let i = 0; i <= numTab.length - 1 && position < number.length;) {
-	// 	if (number.substr(position, numTab[i].roman.length) == numTab[i].roman) {
-	// 	    out += numTab[i].arab;
-	// 	    position += numTab[i].roman.length;
+	// numTab.forEach((elem, elemIndx) => {
+	// 	if (number.substr(position, elem.roman.length) == elem.roman) {
+	// 		out += elem.arab;
+	// 		position += elem.roman.length;
 	// 	}
-	// 	else {
-	// 		i++;
+	// 	if (i <= numTab.length - 1 && position < number.length) {
+	// 		break;
 	// 	}
-	// }
+	// });
+	for (let i = 0; i <= Object.values(numTab).length - 1 && position < number.length;) {
+		const keyElem = getKeyByValue(numTab,Object.values(numTab)[i]);
+		if (number.substr(position, keyElem.length) == keyElem) {
+		    out += Object.values(numTab)[i];
+		    position += keyElem.length;
+		}
+		else {
+			i++;
+		}
+	}
 	return out;
 }
 
@@ -63,7 +68,7 @@ function romanToArab(number) {
 	Созданием функции в функцие заниматься не вижу смысла - не понимаю зачем это надо делать...
 */
 function roman(number) {
-	if (isNaN(number)) {
+	if (Number.isNaN(number)) {
 		return;
 	}
 	const regNum = /[0-9]{1,}/i;
