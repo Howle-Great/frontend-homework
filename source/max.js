@@ -1,7 +1,5 @@
 'use strict';
 
-const max = numbers => Math.max(...numbers);
-
 // let numTab = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
 // 		    [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'],
 // 				[10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']];
@@ -22,7 +20,7 @@ const numTab = [
 	{arab: 1, roman: 'I'},
 ];
 
-function arab_to_roman(number) {
+function arabToRoman(number) {
 	let out = '';
 	if (number <= 0) {
 		return '';
@@ -36,7 +34,7 @@ function arab_to_roman(number) {
    return out;
 }
 
-function roman_to_arab(number) {
+function romanToArab(number) {
 	 number = number.toUpperCase();
 	let out = 0;
 	let position = 0;
@@ -65,15 +63,18 @@ function roman_to_arab(number) {
 	Созданием функции в функцие заниматься не вижу смысла - не понимаю зачем это надо делать...
 */
 function roman(number) {
-	const reg_num = /[0-9]{1,}/i;
-	const reg_roman = /^((?:M{0,3}?(?:D?C{0,3}|C[DM])?(?:L?X{0,3}|X[LC])?(?:I{0,3}?V?I{0,3}|I[VX])))$/igs;
-	if (reg_num.test(number)) {
-		return arab_to_roman(number);
+	if (isNaN(number)) {
+		return;
+	}
+	const regNum = /[0-9]{1,}/i;
+	const regRoman = /^((?:M{0,3}?(?:D?C{0,3}|C[DM])?(?:L?X{0,3}|X[LC])?(?:I{0,3}?V?I{0,3}|I[VX])))$/igs;
+	if (regNum.test(number)) {
+		return arabToRoman(number);
 	} else {
-		if (reg_roman.test(number) && number != '') {
-			return roman_to_arab(number);
+		if (regRoman.test(number) && number != '') {
+			return romanToArab(number);
 		} else {
-			return "Wrong input!"
+			return "Wrong input!";
 		}
 	}
 }
